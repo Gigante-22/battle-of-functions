@@ -1,0 +1,200 @@
+<!-- Verificação de Assets do Jogo -->
+<!-- Abra este arquivo no navegador para testar se todos os assets estão carregando corretamente -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Verificação de Assets - Battle of Functions</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background: #0b0210;
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #ff3366;
+            text-align: center;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .status {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .ok {
+            background: #7fff7f;
+            color: #0b0210;
+        }
+
+        .error {
+            background: #ff3366;
+            color: #fff;
+        }
+
+        .preview {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #8a2be2;
+            margin: 10px 0;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎮 Battle of Functions - Verificação de Assets</h1>
+
+        <h2>Arquivos Essenciais</h2>
+        <div id="essential-checks"></div>
+
+        <h2>Imagens</h2>
+        <div id="image-checks"></div>
+
+        <h2>Efeitos</h2>
+        <div id="effect-checks"></div>
+
+        <h2>Dados</h2>
+        <div id="data-checks"></div>
+    </div>
+
+    <script>
+        // Verificar arquivos essenciais
+        const essentialFiles = [
+            { name: 'index.html', path: 'index.html' },
+            { name: 'style.css', path: 'css/style.css' },
+            { name: 'script.js', path: 'js/script.js' },
+            { name: 'perguntas.json', path: 'data/perguntas.json' }
+        ];
+
+        const images = [
+            { name: 'Mago (Jogador 1)', path: 'img/mago.png' },
+            { name: 'Guerreiro (Rival)', path: 'img/guerreiro.png' },
+            { name: 'Background', path: 'img/background.jpg' }
+        ];
+
+        const effects = [
+            { name: 'Raio (Integral)', path: 'img/efeitos/Raio branco integral.png' },
+            { name: 'Fogo (Limite)', path: 'img/efeitos/Fogo limite.png' },
+            { name: 'Energia (Derivada)', path: 'img/efeitos/energia derivada.png' },
+            { name: 'Impacto', path: 'img/efeitos/Efeito de impacto.png' }
+        ];
+
+        function checkFile(path) {
+            return fetch(path, { method: 'HEAD' })
+                .then(r => r.ok)
+                .catch(() => false);
+        }
+
+        async function checkImage(path) {
+            return new Promise(resolve => {
+                const img = new Image();
+                img.onload = () => resolve(true);
+                img.onerror = () => resolve(false);
+                img.src = path;
+            });
+        }
+
+        async function renderChecks() {
+            // Essentials
+            for (const file of essentialFiles) {
+                const exists = await checkFile(file.path);
+                const status = exists ? '✓' : '✗';
+                const className = exists ? 'ok' : 'error';
+                document.getElementById('essential-checks').innerHTML += `
+          <div class="check-item">
+            <div class="status ${className}">${status}</div>
+            <span>${file.name}</span>
+          </div>
+        `;
+            }
+
+            // Images
+            for (const img of images) {
+                const loaded = await checkImage(img.path);
+                const status = loaded ? '✓' : '✗';
+                const className = loaded ? 'ok' : 'error';
+                document.getElementById('image-checks').innerHTML += `
+          <div class="check-item">
+            <div class="status ${className}">${status}</div>
+            <span>${img.name}</span>
+          </div>
+          ${loaded ? `<div class="preview" style="background-image: url('${img.path}')"></div>` : ''}
+        `;
+            }
+
+            // Effects
+            for (const effect of effects) {
+                const loaded = await checkImage(effect.path);
+                const status = loaded ? '✓' : '✗';
+                const className = loaded ? 'ok' : 'error';
+                document.getElementById('effect-checks').innerHTML += `
+          <div class="check-item">
+            <div class="status ${className}">${status}</div>
+            <span>${effect.name}</span>
+          </div>
+        `;
+            }
+
+            // Data
+            try {
+                const response = await fetch('data/perguntas.json');
+                const data = await response.json();
+                const total = data.length;
+                const limits = data.filter(q => q.tipo === 'limite').length;
+                const derivatives = data.filter(q => q.tipo === 'derivada').length;
+                const integrals = data.filter(q => q.tipo === 'integral').length;
+
+                document.getElementById('data-checks').innerHTML = `
+          <div class="check-item">
+            <div class="status ok">✓</div>
+            <span>Perguntas carregadas: ${total}</span>
+          </div>
+          <div style="padding: 10px; margin: 10px 0; background: rgba(138,43,226,0.1); border-radius: 8px;">
+            <p>📚 Limites: ${limits}</p>
+            <p>📐 Derivadas: ${derivatives}</p>
+            <p>∫ Integrais: ${integrals}</p>
+          </div>
+        `;
+            } catch (e) {
+                document.getElementById('data-checks').innerHTML = `
+          <div class="check-item">
+            <div class="status error">✗</div>
+            <span>Erro ao carregar perguntas</span>
+          </div>
+        `;
+            }
+        }
+
+        renderChecks();
+    </script>
+</body>
+
+</html>

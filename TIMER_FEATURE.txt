@@ -1,0 +1,140 @@
+// ════════════════════════════════════════════════════════════════
+// TIMER FEATURE - Battle of Functions
+// ════════════════════════════════════════════════════════════════
+
+/* MUDANÇAS IMPLEMENTADAS */
+
+✨ TIMER ADICIONADO AO JOGO
+──────────────────────────────
+
+1️⃣ HTML (index.html)
+   └─ Adicionada barra de timer acima da pergunta
+   └─ Elementos: timer-bar, timer-fill, timer-text
+   └─ Posição: dentro de .question-box
+
+2️⃣ CSS (style.css)
+   └─ .timer-bar: Container da barra (fundo escuro)
+   └─ .timer-fill: Barra de progresso (verde → amarelo → vermelho)
+   └─ .timer-text: Texto do tempo em segundos
+   └─ .warning: Cor amarela quando ≤ 10s
+   └─ .critical: Cor vermelha quando ≤ 3s
+
+3️⃣ JavaScript (script.js)
+   └─ const TIMER_DURATION = 30: Duração em segundos
+   └─ startTimer(): Inicia contagem regressiva
+   └─ updateTimerDisplay(): Atualiza barra e texto
+   └─ clearTimer(): Para o intervalo
+   └─ timeoutAnswer(): Trata resposta como errada se tempo expirar
+   └─ Alertas sonoros: 10s, 5s, 3-1s com beeps diferentes
+
+
+/* FUNCIONAMENTO */
+
+1. Jogador clica em um ataque (Limite/Derivada/Integral)
+   ↓
+2. Pergunta aparece + Timer inicia em 30 segundos
+   ↓
+3. Barra verde diminui conforme o tempo passa
+   ↓
+4. Alertas sonoros:
+   - 10s: BEEP grave (880 Hz)
+   - 5s: BEEP grave (880 Hz)
+   - 3-1s: BEEP agudo (1200 Hz)
+   ↓
+5. Opções:
+   A) Jogador responde antes do tempo acabar
+      └─ Timer para
+      └─ Resposta processada (correta/errada)
+   
+   B) Tempo acaba (0s)
+      └─ Tratado como resposta errada
+      └─ Inimigo contra-ataca
+
+
+/* CORES DO TIMER */
+
+Verde (100-33%)  → Tempo normal
+Amarelo (33-10%) → Aviso
+Vermelho (<10%)  → Crítico
+
+
+/* SONS DO TIMER */
+
+Tempo 10s: 880 Hz, 0.1s (alerta moderado)
+Tempo 5s:  880 Hz, 0.1s (alerta moderado)
+Tempo 3-1s: 1200 Hz, 0.08s (alerta agudo)
+
+
+/* ARQUIVOS ATUALIZADOS */
+
+📄 index.html
+   Linhas ~71-74: Adicionada barra de timer no HTML
+
+🎨 css/style.css
+   Linhas ~77-87: Estilos para timer (bar, fill, text, cores)
+
+⚙️ js/script.js
+   Linha 19: Adicionadas variáveis timerInterval e timeRemaining
+   Linha 20: const TIMER_DURATION = 30
+   Linhas 137-140: startTimer() chamada em showQuestion()
+   Linhas 145-148: clearTimer() chamada em closeQuestion()
+   Linhas 149-216: Funções do timer (start, update, clear, timeout)
+   Linhas 241-242: clearTimer() chamada no onAnswerClick()
+
+
+/* FLUXO VISUAL */
+
+[ANTES] Pergunta aparece
+↓
+[DURANTE] Barra verde 30s → Amarela 10s → Vermelha 3s
+↓
+[ALERTA] Sons em 10s, 5s, 3-1s
+↓
+[RESPOSTA] Jogador clica opção OU tempo acaba
+↓
+[RESULTADO] Dano aplicado + próximo turno
+
+
+/* BALANCEAMENTO */
+
+Tempo: 30 segundos
+└─ Suficiente para ler e pensar
+└─ Não muito longo (mantém urgência)
+└─ Ajustável se necessário (mudar TIMER_DURATION)
+
+Alertas sonoros
+└─ 10s: Começa a ficar apertado
+└─ 5s: Atenção redobrada
+└─ 3-1s: Muito rápido!
+
+Punição
+└─ Timeout = resposta errada
+└─ Inimigo contra-ataca com mesmo dano
+
+
+/* PERSONALIZAÇÃO FUTURA */
+
+Para mudar duração:
+   Editar: const TIMER_DURATION = 30;
+   Para: const TIMER_DURATION = 45; (45 segundos)
+
+Para remover alertas sonoros:
+   Comentar a seção de playBeep() em startTimer()
+
+Para adicionar modo sem timer:
+   Criar checkbox no menu para ativar/desativar
+
+
+/* COMPATIBILIDADE */
+
+✅ Todos os navegadores modernos
+✅ Mobile (responsivo)
+✅ Offline (sem dependências)
+✅ Performance otimizada (1 intervalo por pergunta)
+
+
+════════════════════════════════════════════════════════════════════
+
+                    ⏱️ TIMER IMPLEMENTADO! ⏱️
+
+════════════════════════════════════════════════════════════════════

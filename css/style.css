@@ -1,0 +1,110 @@
+/* style.css - Dark Visual Edition for Battle of Functions
+   Well-commented and focused on dark gradients, red glow and animations.
+*/
+:root{
+  --bg1:#0b0210;
+  --bg2:#1b0a1f;
+  --accent:#ff3366;
+  --accent2:#8a2be2;
+  --hp-green:#7fff7f;
+  --white: #fff;
+  --muted:#bdb6c6;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter, system-ui, sans-serif;background:linear-gradient(180deg,var(--bg1),#0f0510 40%,#120513);color:var(--white)}
+.screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+.hidden{display:none}
+.title{font-size:3rem;margin:0;text-align:center;letter-spacing:2px;text-shadow:0 0 12px rgba(255,50,80,.12),0 0 30px rgba(138,43,226,.08);}
+.title .subtitle{display:block;font-size:1rem;color:var(--muted);margin-top:8px}
+.btn{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,.08);padding:10px 18px;border-radius:8px;margin:6px;cursor:pointer;transition:all .18s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(138,43,226,.08)}
+.btn.primary{background:linear-gradient(90deg,var(--accent2),var(--accent));border:none}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.06)}
+.start-buttons{margin-top:18px}
+.credits{position:fixed;bottom:12px;font-size:0.8rem;color:var(--muted)}
+
+/* Menu */
+.menu-box{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));padding:24px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.6);min-width:320px}
+.modes{display:flex;gap:12px;justify-content:center;margin:14px 0}
+.tip{color:var(--muted);font-size:0.9rem;text-align:center}
+
+/* Game HUD */
+.hud{display:flex;justify-content:space-between;width:100%;max-width:1100px;padding:18px}
+.player{width:260px;text-align:center}
+.portrait{width:96px;height:96px;margin:0 auto;position:relative;border-radius:50%;overflow:hidden;box-shadow:0 0 20px rgba(138,43,226,.3)}
+
+/* Portrait images */
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
+
+#player1 .portrait{box-shadow:0 0 20px rgba(138,43,226,.4), 0 0 30px rgba(138,43,226,.2)}
+#player2 .portrait{box-shadow:0 0 20px rgba(255,50,80,.4), 0 0 30px rgba(255,50,80,.2)}
+.name{margin-top:6px;font-weight:700;color:var(--muted)}
+.hp-bar{background:linear-gradient(90deg,#2a0b12,#1b0610);height:16px;border-radius:10px;margin-top:8px;overflow:hidden;border:1px solid rgba(255,255,255,.03)}
+.hp{height:100%;background:linear-gradient(90deg,var(--hp-green),#66ff88);transition:width .5s ease}
+.hp-text{font-size:0.85rem;color:var(--muted);margin-top:6px}
+.center-hud{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.turn-indicator{background:rgba(0,0,0,.4);padding:8px 12px;border-radius:10px;color:var(--muted);margin-bottom:8px}
+.attack-buttons{display:flex;gap:8px}
+.atk-btn{padding:10px 16px;border-radius:10px;background:linear-gradient(90deg,#220620,#3a0630);border:1px solid rgba(255,255,255,.04);color:var(--white);cursor:pointer}
+.atk-btn:hover{box-shadow:0 8px 40px rgba(255,50,80,.06);transform:translateY(-3px)}
+
+/* Battlefield */
+.battlefield{position:relative;width:100%;max-width:1100px;height:360px;margin:18px auto;overflow:hidden;border-radius:12px;background-image:url('../img/background.jpg');background-size:cover;background-position:center}
+.battlefield .bg{position:absolute;inset:0;background:radial-gradient(circle at 10% 20%, rgba(138,43,226,.18), transparent 8%), 
+                                    radial-gradient(circle at 90% 80%, rgba(255,50,80,.12), transparent 12%), 
+                                    linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.6));backdrop-filter:blur(2px)}
+.scene{position:relative;height:100%;display:flex;align-items:center;justify-content:space-between;padding:24px}
+.char{width:240px;height:280px;border-radius:8px;display:flex;align-items:flex-end;justify-content:center;position:relative;background-size:contain;background-repeat:no-repeat;background-position:center bottom}
+.char.p1{background-image:url('../img/mago.png')}
+.char.p2{background-image:url('../img/guerreiro.png')}
+
+/* Question panel */
+.question-panel{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:40}
+.question-box{background:linear-gradient(180deg,#0f0610,#190513);padding:18px;border-radius:12px;min-width:420px;box-shadow:0 12px 40px rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.03)}
+.question-box h3{margin:0 0 12px 0}
+
+/* Timer */
+.timer-bar{position:relative;width:100%;height:16px;background:rgba(0,0,0,.4);border-radius:10px;margin-bottom:12px;overflow:hidden;border:1px solid rgba(255,255,255,.05)}
+.timer-fill{height:100%;background:linear-gradient(90deg,#7fff7f,#66ff88);width:100%;transition:width .1s linear}
+.timer-fill.warning{background:linear-gradient(90deg,#ffaa00,#ff8800)}
+.timer-fill.critical{background:linear-gradient(90deg,#ff3366,#ff1144)}
+.timer-text{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:0.7rem;color:var(--white);font-weight:bold;text-shadow:0 0 4px rgba(0,0,0,.8)}
+
+.alternatives{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.alt-btn{padding:10px;border-radius:8px;background:linear-gradient(90deg,#120512,#2b0b1a);color:var(--white);border:1px solid rgba(255,255,255,.03);cursor:pointer}
+.alt-btn.correct{box-shadow:0 8px 30px rgba(46,204,113,.12);outline:2px solid rgba(46,204,113,.06)}
+.alt-btn.wrong{box-shadow:0 8px 30px rgba(255,50,50,.12);outline:2px solid rgba(255,50,50,.06)}
+
+/* overlay and end-screen */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:30}
+.end-screen{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:50;background:linear-gradient(180deg,#180612,#240918);padding:24px;border-radius:12px;min-width:360px;text-align:center}
+.end-screen h2{margin:0 0 8px 0}
+
+/* small animations */
+.shake{animation:shake .45s}
+.flash{animation:flash .3s}
+.attack-anim{transform:translateX(20px);transition:transform .25s}
+
+/* Efeitos de ataque */
+.effect-raio{position:absolute;width:100px;height:120px;background-image:url('../img/efeitos/Raio branco integral.png');background-size:contain;background-repeat:no-repeat;animation:effect-float .6s ease-out forwards}
+.effect-fogo{position:absolute;width:100px;height:100px;background-image:url('../img/efeitos/Fogo limite.png');background-size:contain;background-repeat:no-repeat;animation:effect-float .6s ease-out forwards}
+.effect-energia{position:absolute;width:80px;height:80px;background-image:url('../img/efeitos/energia derivada.png');background-size:contain;background-repeat:no-repeat;animation:effect-float .6s ease-out forwards}
+.effect-impacto{position:absolute;width:120px;height:100px;background-image:url('../img/efeitos/Efeito de impacto.png');background-size:contain;background-repeat:no-repeat;animation:effect-pop .5s ease-out forwards}
+
+@keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-4px)}100%{transform:translateX(0)}}
+@keyframes flash{0%{box-shadow:0 0 0 rgba(255,0,0,0)}50%{box-shadow:0 0 40px rgba(255,0,0,.25)}100%{box-shadow:0 0 0 rgba(255,0,0,0)}}
+@keyframes effect-float{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(0.8)}}
+@keyframes effect-pop{0%{opacity:1;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}100%{opacity:0;transform:scale(0.8)}}
+
+/* Responsive */
+@media (max-width:900px){
+  .hud{flex-direction:column;gap:12px}
+  .player{width:100%;display:flex;justify-content:space-between;align-items:center}
+  .battlefield{height:260px}
+}
+
+/* credits footer */
+footer.credits{font-size:0.8rem;color:var(--muted)}
+
+/* small helper classes */
+.glow-red{box-shadow:0 0 18px rgba(255,50,80,.18)}
